@@ -4,8 +4,8 @@ from config import auchanUrl, metroUrl
 
 language = 'ru'
 
-def getResult(shopUrl):
-    response = requests.get(f'{shopUrl}/{language}/promotions')
+def getResult(url):
+    response = requests.get(f'{url}/{language}/promotions')
     soup = BeautifulSoup(response.text, 'lxml')
     categories = soup.find_all('a', class_='jsx-631741978 NestedList__itemTitle NestedList__itemTitle_bold')
     global category_urls
@@ -14,15 +14,17 @@ def getResult(shopUrl):
 
 
 def getShopCategories(shopName):
+    global shopUrl
     if shopName == 'Ашан':
-        return getResult(auchanUrl)
+        shopUrl = auchanUrl
     elif shopName == 'Метро':
-        return getResult(metroUrl)
+        shopUrl = metroUrl
+    return getResult(shopUrl)
 
            
 def categoryPrice(category):
     categoryUrl = category_urls.get(category)
-    response = requests.get(f'{auchanUrl}{categoryUrl}')
+    response = requests.get(f'{shopUrl}{categoryUrl}')
     soup = BeautifulSoup(response.text, 'lxml')
     items_name = soup.find_all('span', class_='jsx-4147154605 ProductTile__title')
     item_discount_price = soup.find_all('span', class_='jsx-3642073353 Price__value_caption Price__value_discount')
