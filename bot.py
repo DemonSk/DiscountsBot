@@ -40,15 +40,8 @@ def getShopName(message):
         bot.send_message(message.chat.id, f'Выбери магазин, который тебя интересует из списка', reply_markup=shopsKeyBoard)
 
 
-
-
 def getCategoryPrice(message):
     bot.send_message(message.chat.id, f'Скидки на продукты в категории {message.text} такие:\n{categoryPrice(message.text)}')
-        # bot.register_next_step_handler(message, getDiscounts)
-        
-
-# def getDiscounts(message):
-    
 
 
 bot.polling()
